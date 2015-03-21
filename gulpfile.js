@@ -90,7 +90,7 @@ gulp.task('watch', ['copy', 'html', 'js/vendor'], function () {
         gulp.start('js-watch/index')
     })
 
-    watch(['./index.html', './css/index.css'], function () {
+    watch(['./index.html', './css/index.css', './css/octocat.css'], function () {
         gulp.start('html')
     })
 
