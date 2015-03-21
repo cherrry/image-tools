@@ -15,14 +15,27 @@ var chmod = require('gulp-chmod')
 var livereload = require('gulp-livereload')
 var http = require('http')
 var st = require('st')
+var adjustcss = require('gulp-css-url-adjuster')
+var lazypipe = require('lazypipe')
 
-gulp.task('default', ['html', 'js'])
+gulp.task('default', ['copy', 'html', 'js'])
+
+gulp.task('copy', function () {
+    gulp.src('./bower_components/semantic-ui/dist/themes/default/assets/**/*', {
+        base: './bower_components/semantic-ui/dist/themes/default/assets'
+    }).pipe(gulp.dest('./css/assets'))
+})
 
 gulp.task('html', function () {
     var assets = useref.assets()
+    var csspipe = lazypipe()
+        .pipe(adjustcss, {
+            replace: [ '../themes/default/assets', './assets' ]
+        })
+        .pipe(minifycss)
     return gulp.src('./index.html')
         .pipe(assets)
-        .pipe(gulpif('*.css', minifycss()))
+        .pipe(gulpif('*.css', csspipe()))
         .pipe(useref())
         .pipe(chmod(644))
         .pipe(gulp.dest('./'))
@@ -55,7 +68,8 @@ gulp.task('js/index', function () {
         .pipe(gulp.dest('./'))
 })
 
-gulp.task('watch', ['html', 'js/vendor'], function () {
+gulp.task('w', ['watch'])
+gulp.task('watch', ['copy', 'html', 'js/vendor'], function () {
 
     var bundler = watchify(browserify('./js/index.jsx', {
         cache: {},
@@ -76,13 +90,14 @@ gulp.task('watch', ['html', 'js/vendor'], function () {
         gulp.start('js-watch/index')
     })
 
-    watch(['./index.html', './css/**/*.css', '!./**/*.min.*'], function () {
+    watch(['./index.html', './css/index.css'], function () {
         gulp.start('html')
     })
 
     gulp.start('js-watch/index')
 })
 
+gulp.task('s', ['server'])
 gulp.task('server', ['watch'], function (done) {
     http.createServer(st({
         path: __dirname,

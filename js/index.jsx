@@ -2,9 +2,17 @@
 
 var React = require('react')
 
+var Canvas = require('src/layout/canvas.jsx')
+var Sidebar = require('src/layout/sidebar.jsx')
+
 var Index = React.createClass({
     render: function () {
-        return <h1>Image Processing Tool</h1>
+        return (
+            <div className="it-container">
+                <Canvas />
+                <Sidebar />
+            </div>
+        )
     }
 })
 
