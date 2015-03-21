@@ -46,7 +46,11 @@ gulp.task('js', ['js/vendor', 'js/index'])
 gulp.task('js/vendor', function () {
     return browserify({ debug: true })
         .plugin('bundle-collapser/plugin')
+        .require('events')
         .require('react')
+        .require('react/addons')
+        .require('flux')
+        .require('underscore')
         .bundle()
         .pipe(source('./js/vendor.min.js'))
         .pipe(buffer())
@@ -58,7 +62,11 @@ gulp.task('js/vendor', function () {
 gulp.task('js/index', function () {
     return browserify('./js/index.jsx', { debug: true })
         .plugin('bundle-collapser/plugin')
+        .exclude('events')
         .exclude('react')
+        .exclude('react/addons')
+        .exclude('flux')
+        .exclude('underscore')
         .bundle()
         .pipe(source('./js/index.min.js'))
         .pipe(buffer())
@@ -69,14 +77,19 @@ gulp.task('js/index', function () {
 })
 
 gulp.task('w', ['watch'])
-gulp.task('watch', ['copy', 'html', 'js/vendor'], function () {
+gulp.task('watch', function () {
 
     var bundler = watchify(browserify('./js/index.jsx', {
         cache: {},
         packageCache: {},
         fullPaths: true,
         debug: true
-    })).exclude('react')
+    }))
+        .exclude('events')
+        .exclude('react')
+        .exclude('react/addons')
+        .exclude('flux')
+        .exclude('underscore')
 
     gulp.task('js-watch/index', function () {
         return bundler.bundle()
@@ -94,6 +107,9 @@ gulp.task('watch', ['copy', 'html', 'js/vendor'], function () {
         gulp.start('html')
     })
 
+    gulp.start('copy')
+    gulp.start('html')
+    gulp.start('js/vendor')
     gulp.start('js-watch/index')
 })
 
