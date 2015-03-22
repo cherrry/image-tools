@@ -1,9 +1,10 @@
 'use strict'
 
-var DndStore = require('src/store/global-dnd-store.js')
-var GlobalDndAction = require('src/action/global-dnd-action.js')
+var _ = require('underscore')
 
+var DndStore = require('src/store/dnd-store.js')
 var document = require('src/var/document.js')
+var WindowAction = require('src/action/window-action.js')
 
 var counter = 0
 
@@ -11,9 +12,8 @@ function onDragEnter(event) {
     event.preventDefault()
     event.stopPropagation()
     ++counter
-
-    if (counter === 1) {
-        GlobalDndAction.dragEnter()
+    if (counter == 1) {
+        WindowAction.dragEnter()
     }
 }
 
@@ -21,15 +21,15 @@ function onDragLeave(event) {
     event.preventDefault()
     event.stopPropagation()
     --counter
-
     if (counter === 0) {
-        GlobalDndAction.dragLeave()
+        WindowAction.dragLeave()
     }
 }
 
 function onDrop(event) {
     event.preventDefault()
-    GlobalDndAction.dragLeave()
+    counter = 0
+    WindowAction.dragLeave()
 }
 
 function onDragOver(event) {
@@ -41,12 +41,3 @@ document.addEventListener('dragenter', onDragEnter, false)
 document.addEventListener('dragleave', onDragLeave, false)
 document.addEventListener('dragover', onDragOver, false)
 document.addEventListener('drop', onDrop, false)
-
-DndStore.addListener(onDnd)
-
-function onDnd() {
-    var is_dragging = DndStore.isDragging()
-    if (!is_dragging) {
-        counter = 0
-    }
-}

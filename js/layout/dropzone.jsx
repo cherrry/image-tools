@@ -3,12 +3,11 @@
 var React = require('react/addons')
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
-var GlobalDndStore = require('src/store/global-dnd-store.js')
-var GlobalDndAction = require('src/action/global-dnd-action.js')
+var DndStore = require('src/store/dnd-store.js')
 
 function getState() {
     return {
-        is_active: GlobalDndStore.isDragging()
+        is_active: DndStore.isDragging()
     }
 }
 
@@ -18,11 +17,11 @@ var Dropzone = React.createClass({
     },
     componentWillMount: function () {
         var self = this
-        GlobalDndStore.addListener(self._onDnd)
+        DndStore.addListener(self._onDnd)
     },
     componentWillUnmount: function () {
         var self = this
-        GlobalDndStore.removeListener(self._onDnd)
+        DndStore.addListener(self._onDnd)
     },
     _onDnd: function () {
         var self = this
@@ -31,7 +30,7 @@ var Dropzone = React.createClass({
     _onDrop: function (event, data) {
         event.preventDefault()
         var files = event.dataTransfer.files
-        GlobalDndAction.drop(files)
+        console.log('FileAction.drop(files)')
     },
     render: function () {
         var self = this

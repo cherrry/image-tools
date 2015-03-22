@@ -5,17 +5,17 @@ var _ = require('underscore')
 
 var window = require('src/var/window.js')
 
+var WindowStore = require('src/store/window-store.js')
 var WebglRenderer = require('src/layout/canvas/webgl-renderer.jsx')
-var WebglRendererAction = require('src/action/webgl-renderer-action.js')
 
 var Canvas = React.createClass({
     componentDidMount: function () {
         var self = this
         self._adjustCanvasSize = _.debounce(self._adjustCanvasSize, 200)
-        window.addEventListener('resize', self._adjustCanvasSize)
+        WindowStore.addListener(self._adjustCanvasSize)
     },
     componentWillUnmount: function () {
-        window.removeEventListener('resize', self._adjustCanvasSize)
+        WindowStore.removeListener(self._adjustCanvasSize)
     },
     _adjustCanvasSize: function () {
         var self = this
@@ -28,7 +28,6 @@ var Canvas = React.createClass({
         canvasDisplay.style.height = 'calc(100% - ' + menu.scrollHeight + 'px - 1em)'
         canvas.height = canvasSegment.scrollHeight
         canvas.width = canvasSegment.scrollWidth
-        WebglRendererAction.resize()
     },
     render: function () {
         var self = this

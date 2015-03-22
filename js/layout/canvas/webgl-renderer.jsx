@@ -3,7 +3,7 @@
 var React = require('react')
 var PIXI = require('pixi')
 
-var WebglRendererStore = require('src/store/webgl-renderer-store.js')
+var WindowStore = require('src/store/window-store.js')
 
 var WebglRenderer = React.createClass({
     componentDidMount: function () {
@@ -13,13 +13,18 @@ var WebglRenderer = React.createClass({
             view: canvas,
             transparent: true
         })
-        WebglRendererStore.addListener(self._redraw)
+        // WindowStore.addListener(self._redraw)
     },
     componentWillUnmount: function () {
         var self = this
-        WebglRendererStore.removeListener(self._redraw)
+        // WindowStore.removeListener(self._redraw)
+    },
+    _onWindowUpdate: function (message) {
+        // console.log(message)
     },
     _redraw: function () {
+        // TODO: get image from file store
+        /*
         var self = this
         var renderer = self._renderer
         var canvas = renderer.view
@@ -36,6 +41,7 @@ var WebglRenderer = React.createClass({
         requestAnimationFrame(function () {
             renderer.render(stage)
         })
+        */
     },
     render: function () {
         var self = this

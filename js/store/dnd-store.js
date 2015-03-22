@@ -4,21 +4,18 @@ var assign = require('object-assign')
 var EventEmitter = require('events').EventEmitter
 
 var Dispatcher = require('src/var/dispatcher.js')
-var DndActionType = require('src/const/dnd-action-type.js')
+var WindowActionType = require('src/const/window-action-type.js')
+var uniqueString = require('src/util/unique-string.js')
 
-var DND_EVENT = 'dnd'
+var DND_EVENT = uniqueString()
 
 var _store = {
-    is_dragging: false,
-    files: []
+    is_dragging: false
 }
 
-var GlobalDndStore = assign({}, EventEmitter.prototype, {
+var DndStore = assign({}, EventEmitter.prototype, {
     isDragging: function () {
         return _store.is_dragging
-    },
-    getFiles: function () {
-        return _store.files
     },
     addListener: function (callback) {
         var self = this
@@ -32,30 +29,21 @@ var GlobalDndStore = assign({}, EventEmitter.prototype, {
 
 function setIsDragging(is_dragging) {
     var was_dragging = _store.is_dragging
-    _store.is_dragging = is_dragging
-
-    if (was_dragging !== is_dragging) {
-        GlobalDndStore.emit(DND_EVENT)
+    if (is_dragging !== was_dragging) {
+        _store.is_dragging = is_dragging
+        DndStore.emit(DND_EVENT)
     }
-}
-
-function setFiles(files) {
-    _store.files = files || []
-    GlobalDndStore.emit(DND_EVENT)
 }
 
 Dispatcher.register(function (message) {
     switch (message.type) {
-        case DndActionType.DRAGENTER:
+        case WindowActionType.DRAG_ENTER:
             setIsDragging(true)
             break
-        case DndActionType.DRAGLEAVE:
+        case WindowActionType.DRAG_LEAVE:
             setIsDragging(false)
-            break
-        case DndActionType.DROP:
-            setFiles(message.data.files)
             break
     }
 })
 
-module.exports = GlobalDndStore
+module.exports = DndStore

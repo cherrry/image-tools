@@ -7,7 +7,8 @@ var Canvas = require('src/layout/canvas.jsx')
 var Sidebar = require('src/layout/sidebar.jsx')
 var Dropzone = require('src/layout/dropzone.jsx')
 
-require('src/listener/global-dnd-listener.js')
+require('src/listener/dnd-listener.js')
+require('src/listener/resize-listener.js')
 
 var Index = React.createClass({
     render: function () {

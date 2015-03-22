@@ -2,13 +2,12 @@
 
 var React = require('react')
 
-var GlobalDndAction = require('src/action/global-dnd-action.js')
 var UploadButton = require('src/component/upload-button.jsx')
 
 var Sidebar = React.createClass({
     _uploadImage: function (event) {
         var files = event.target.files
-        GlobalDndAction.drop(files)
+        console.log('FileAction.drop(files)')
     },
     render: function () {
         var self = this
