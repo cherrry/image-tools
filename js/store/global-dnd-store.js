@@ -42,7 +42,6 @@ function setIsDragging(is_dragging) {
 function setFiles(files) {
     _store.files = files || []
     GlobalDndStore.emit(DND_EVENT)
-    console.log(_store)
 }
 
 Dispatcher.register(function (message) {

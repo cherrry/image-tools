@@ -41,7 +41,14 @@
     },
     "browserify": {
         "transform": [
+            "browserify-shim",
             [ "reactify", { "extension": ".jsx" } ]
         ]
+    },
+    "browser": {
+        "pixi": "./bower_components/pixi/bin/pixi.dev.js"
+    },
+    "browserify-shim": {
+        "pixi": "PIXI"
     }
 }
