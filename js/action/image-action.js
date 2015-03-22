@@ -11,6 +11,11 @@ var ImageAction = {
                 files: files
             }
         })
+    },
+    resizeCanvas: function () {
+        Dispatcher.dispatch({
+            type: ImageActionType.RESIZE_CANVAS
+        })
     }
 }
 

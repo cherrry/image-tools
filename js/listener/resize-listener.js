@@ -5,8 +5,8 @@ var _ = require('underscore')
 var window = require('src/var/window.js')
 var WindowAction = require('src/action/window-action.js')
 
-var onResize = _.debounce(function (event) {
+var onResize = _.debounce(function () {
     WindowAction.resize()
-}, 100)
+}, 50)
 
 window.addEventListener('resize', onResize)

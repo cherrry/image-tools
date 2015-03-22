@@ -4,9 +4,9 @@ var React = require('react')
 var _ = require('underscore')
 
 var window = require('src/var/window.js')
-
 var WindowStore = require('src/store/window-store.js')
 var WebglRenderer = require('src/layout/canvas/webgl-renderer.jsx')
+var ImageAction = require('src/action/image-action.js')
 
 var Canvas = React.createClass({
     componentDidMount: function () {
@@ -28,6 +28,7 @@ var Canvas = React.createClass({
         canvasDisplay.style.height = 'calc(100% - ' + menu.scrollHeight + 'px - 1em)'
         canvas.height = canvasSegment.scrollHeight
         canvas.width = canvasSegment.scrollWidth
+        ImageAction.resizeCanvas()
     },
     render: function () {
         var self = this
