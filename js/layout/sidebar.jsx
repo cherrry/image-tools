@@ -3,11 +3,12 @@
 var React = require('react')
 
 var UploadButton = require('src/component/upload-button.jsx')
+var ImageAction = require('src/action/image-action.js')
 
 var Sidebar = React.createClass({
     _uploadImage: function (event) {
         var files = event.target.files
-        console.log('FileAction.drop(files)')
+        ImageAction.dropFiles(files)
     },
     render: function () {
         var self = this

@@ -4,6 +4,7 @@ var React = require('react')
 var PIXI = require('pixi')
 
 var WindowStore = require('src/store/window-store.js')
+var ImageStore = require('src/store/image-store.js')
 
 var WebglRenderer = React.createClass({
     componentDidMount: function () {

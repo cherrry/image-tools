@@ -3,6 +3,7 @@
 var React = require('react/addons')
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
+var ImageAction = require('src/action/image-action.js')
 var DndStore = require('src/store/dnd-store.js')
 
 function getState() {
@@ -30,7 +31,7 @@ var Dropzone = React.createClass({
     _onDrop: function (event, data) {
         event.preventDefault()
         var files = event.dataTransfer.files
-        console.log('FileAction.drop(files)')
+        ImageAction.dropFiles(files)
     },
     render: function () {
         var self = this
