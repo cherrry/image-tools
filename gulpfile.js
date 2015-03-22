@@ -15,14 +15,27 @@ var chmod = require('gulp-chmod')
 var livereload = require('gulp-livereload')
 var http = require('http')
 var st = require('st')
+var adjustcss = require('gulp-css-url-adjuster')
+var lazypipe = require('lazypipe')
 
-gulp.task('default', ['html', 'js'])
+gulp.task('default', ['copy', 'html', 'js'])
+
+gulp.task('copy', function () {
+    gulp.src('./bower_components/semantic-ui/dist/themes/default/assets/**/*', {
+        base: './bower_components/semantic-ui/dist/themes/default/assets'
+    }).pipe(gulp.dest('./css/assets'))
+})
 
 gulp.task('html', function () {
     var assets = useref.assets()
+    var csspipe = lazypipe()
+        .pipe(adjustcss, {
+            replace: [ '../themes/default/assets', './assets' ]
+        })
+        .pipe(minifycss)
     return gulp.src('./index.html')
         .pipe(assets)
-        .pipe(gulpif('*.css', minifycss()))
+        .pipe(gulpif('*.css', csspipe()))
         .pipe(useref())
         .pipe(chmod(644))
         .pipe(gulp.dest('./'))
@@ -33,7 +46,12 @@ gulp.task('js', ['js/vendor', 'js/index'])
 gulp.task('js/vendor', function () {
     return browserify({ debug: true })
         .plugin('bundle-collapser/plugin')
+        .require('events')
+        .require('flux')
+        .require('pixi')
         .require('react')
+        .require('react/addons')
+        .require('underscore')
         .bundle()
         .pipe(source('./js/vendor.min.js'))
         .pipe(buffer())
@@ -45,7 +63,12 @@ gulp.task('js/vendor', function () {
 gulp.task('js/index', function () {
     return browserify('./js/index.jsx', { debug: true })
         .plugin('bundle-collapser/plugin')
+        .exclude('events')
+        .exclude('flux')
+        .exclude('pixi')
         .exclude('react')
+        .exclude('react/addons')
+        .exclude('underscore')
         .bundle()
         .pipe(source('./js/index.min.js'))
         .pipe(buffer())
@@ -55,14 +78,21 @@ gulp.task('js/index', function () {
         .pipe(gulp.dest('./'))
 })
 
-gulp.task('watch', ['html', 'js/vendor'], function () {
+gulp.task('w', ['watch'])
+gulp.task('watch', function () {
 
     var bundler = watchify(browserify('./js/index.jsx', {
         cache: {},
         packageCache: {},
         fullPaths: true,
         debug: true
-    })).exclude('react')
+    }))
+        .exclude('events')
+        .exclude('flux')
+        .exclude('pixi')
+        .exclude('react')
+        .exclude('react/addons')
+        .exclude('underscore')
 
     gulp.task('js-watch/index', function () {
         return bundler.bundle()
@@ -76,13 +106,17 @@ gulp.task('watch', ['html', 'js/vendor'], function () {
         gulp.start('js-watch/index')
     })
 
-    watch(['./index.html', './css/**/*.css', '!./**/*.min.*'], function () {
+    watch(['./index.html', './css/index.css', './css/octocat.css'], function () {
         gulp.start('html')
     })
 
+    gulp.start('copy')
+    gulp.start('html')
+    gulp.start('js/vendor')
     gulp.start('js-watch/index')
 })
 
+gulp.task('s', ['server'])
 gulp.task('server', ['watch'], function (done) {
     http.createServer(st({
         path: __dirname,

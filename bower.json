@@ -17,6 +17,7 @@
         "tests"
     ],
     "dependencies": {
+        "pixi": "~>2.2.0",
         "semantic-ui": "~>1.11.0"
     }
 }
