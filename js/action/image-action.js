@@ -1,6 +1,6 @@
 'use strict'
 
-var Dispatcher = require('src/var/dispatcher.js')
+var Dispatcher = require('src/singleton/dispatcher.js')
 var ImageActionType = require('src/const/image-action-type.js')
 
 var ImageAction = {

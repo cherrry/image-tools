@@ -3,7 +3,7 @@
 var assign = require('object-assign')
 var EventEmitter = require('events').EventEmitter
 
-var Dispatcher = require('src/var/dispatcher.js')
+var Dispatcher = require('src/singleton/dispatcher.js')
 var WindowActionType = require('src/const/window-action-type.js')
 var uniqueString = require('src/util/unique-string.js')
 
