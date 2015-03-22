@@ -17,6 +17,7 @@
         "flux": "~>2.0.0",
         "object-assign": "~>2.0.0",
         "react": "~>0.13.0",
+        "shortid": "~>2.2.0",
         "underscore": "~>1.8.0"
     },
     "devDependencies": {
