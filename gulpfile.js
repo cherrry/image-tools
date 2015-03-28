@@ -17,6 +17,7 @@ var http = require('http')
 var st = require('st')
 var adjustcss = require('gulp-css-url-adjuster')
 var lazypipe = require('lazypipe')
+var exec = require('child_process').exec
 
 gulp.task('default', ['copy', 'html', 'js'])
 
@@ -51,6 +52,7 @@ gulp.task('js/vendor', function () {
         .require('pixi')
         .require('react')
         .require('react/addons')
+        .require('shortid')
         .require('underscore')
         .bundle()
         .pipe(source('./js/vendor.min.js'))
@@ -68,6 +70,7 @@ gulp.task('js/index', function () {
         .exclude('pixi')
         .exclude('react')
         .exclude('react/addons')
+        .exclude('shortid')
         .exclude('underscore')
         .bundle()
         .pipe(source('./js/index.min.js'))
@@ -92,6 +95,7 @@ gulp.task('watch', function () {
         .exclude('pixi')
         .exclude('react')
         .exclude('react/addons')
+        .exclude('shortid')
         .exclude('underscore')
 
     gulp.task('js-watch/index', function () {
@@ -124,4 +128,13 @@ gulp.task('server', ['watch'], function (done) {
         cache: false
     })).listen(8080, done)
     livereload.listen({ basePath: './' })
+})
+
+gulp.task('t', ['test'])
+gulp.task('test', function (cb) {
+    exec('npm test', function (err, stdout, stderr) {
+        console.log(stdout)
+        console.error(stderr)
+        cb(err)
+    })
 })

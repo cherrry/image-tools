@@ -13,6 +13,9 @@
     },
     "license": "MIT",
     "private": true,
+    "scripts": {
+        "test": "node ./node_modules/jest-cli/bin/jest.js"
+    },
     "dependencies": {
         "flux": "~>2.0.0",
         "object-assign": "~>2.0.0",
@@ -33,7 +36,9 @@
         "gulp-uglify": "~>1.1.0",
         "gulp-useref": "~>1.1.0",
         "gulp-watch": "~>4.2.0",
+        "jest-cli": "~>0.4.0",
         "lazypipe": "~>0.2.0",
+        "react-tools": "~>0.13.0",
         "reactify": "~>1.1.0",
         "st": "~>0.5.0",
         "vinyl-buffer": "~>1.0.0",
@@ -51,5 +56,18 @@
     },
     "browserify-shim": {
         "pixi": "PIXI"
+    },
+    "jest": {
+        "scriptPreprocessor": "<rootDir>/preprocessor.js",
+        "unmockedModulePathPatterns": [
+            "object-assign",
+            "react",
+            "react/addons",
+            "src/const",
+            "src/util",
+            "src/var"
+        ],
+        "moduleFileExtensions": [ "js", "jsx" ],
+        "testFileExtensions": [ "js", "jsx" ]
     }
 }

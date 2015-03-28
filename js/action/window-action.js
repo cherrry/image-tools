@@ -1,6 +1,6 @@
 'use strict'
 
-var Dispatcher = require('src/var/dispatcher.js')
+var Dispatcher = require('src/singleton/dispatcher.js')
 var WindowActionType = require('src/const/window-action-type.js')
 
 var WindowAction = {
