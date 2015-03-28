@@ -1,6 +1,7 @@
 'use strict'
 
 var React = require('react')
+var classnames = require('classnames')
 
 var AccordionItem = React.createClass({
     getDefaultProps: function () {
@@ -19,11 +20,11 @@ var AccordionItem = React.createClass({
         var is_active = self.props.is_active
         return (
             <div>
-                <div onClick={ self._onActivate } className={ "title" + ( is_active ? " active" : "" ) }>
+                <div onClick={ self._onActivate } className={ classnames('title', { active: is_active } ) }>
                     <i className="dropdown icon" />
                     { self.props.title }
                 </div>
-                <div className={ "content" + ( is_active ? " active" : "" ) }>
+                <div className={ classnames('content', { active: is_active }) }>
                     { self.props.children }
                 </div>
             </div>

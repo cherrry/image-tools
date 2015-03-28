@@ -1,6 +1,7 @@
 'use strict'
 
-var React = require('react/addons')
+var React = require('react')
+var classnames = require('classnames')
 
 var AccordionItem = require('src/component/accordion-item.jsx')
 
@@ -21,9 +22,10 @@ var Accordion = React.createClass({
     },
     _activateChild: function (child_index) {
         var self = this
-        var active_child = self.state.active_child
-        self.setState({
-            active_child: active_child === child_index ? -1 : child_index
+        self.setState(function (state, props) {
+            return {
+                active_child: state.active_child === child_index ? -1 : child_index
+            }
         })
     },
     render: function () {
@@ -31,9 +33,9 @@ var Accordion = React.createClass({
 
         var active_child = self.state.active_child
         var children = React.Children.map(self.props.children, function (child, index) {
-            if (child.type === AccordionItem.type) {
+            if (child.type === AccordionItem) {
                 var is_active = active_child === index
-                return React.addons.cloneWithProps(child, {
+                return React.cloneElement(child, {
                     is_active: is_active,
                     onActivate: self._activateChild.bind(self, index)
                 })
@@ -42,7 +44,7 @@ var Accordion = React.createClass({
         })
 
         return (
-            <div className={ "ui accordion" + ( self.props.className ? " " + self.props.className : "" ) }>
+            <div className={ classnames('ui accordion', self.props.className) }>
                 { children }
             </div>
         )

@@ -8,6 +8,8 @@ var WindowStore = require('src/store/window-store.js')
 var WebglRenderer = require('src/layout/canvas/webgl-renderer.jsx')
 var ImageAction = require('src/action/image-action.js')
 
+var findDOMNode = React.findDOMNode
+
 var Canvas = React.createClass({
     componentDidMount: function () {
         var self = this
@@ -20,10 +22,11 @@ var Canvas = React.createClass({
     _adjustCanvasSize: function () {
         var self = this
 
-        var menu = self.refs.menu.getDOMNode()
-        var canvasDisplay = self.refs.canvasDisplay.getDOMNode()
-        var canvasSegment = self.refs.canvasSegment.getDOMNode()
-        var canvas = self.refs.canvas.getDOMNode()
+        var refs = self.refs
+        var menu = findDOMNode(refs.menu)
+        var canvasDisplay = findDOMNode(refs.canvasDisplay)
+        var canvasSegment = findDOMNode(refs.canvasSegment)
+        var canvas = findDOMNode(refs.canvas)
 
         canvasDisplay.style.height = 'calc(100% - ' + menu.scrollHeight + 'px - 1em)'
         canvas.height = canvasSegment.scrollHeight

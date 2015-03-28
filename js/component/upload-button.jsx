@@ -1,13 +1,14 @@
 'use strict'
 
 var React = require('react')
+var classnames = require('classnames')
 
 var document = require('src/var/document.js')
 
 var UploadButton = React.createClass({
     _triggerUpload: function (event) {
         var self = this
-        var fileField = self.refs.fileField.getDOMNode()
+        var fileField = React.findDOMNode(self.refs.fileField)
 
         var clickEvent = document.createEvent('Events')
         clickEvent.initEvent('click', true, false)
@@ -19,8 +20,8 @@ var UploadButton = React.createClass({
         var self = this
         return (
             <div>
-                <input ref="fileField" type="file" onChange={ self.props.onChange } style={{ display: 'none' }} />
-                <button className={ self.props.className || "" } onClick={ self._triggerUpload }>
+                <input ref="fileField" type="file" onChange={ self.props.onChange } hidden />
+                <button className={ classnames(self.props.className) } onClick={ self._triggerUpload }>
                     { self.props.children }
                 </button>
             </div>
