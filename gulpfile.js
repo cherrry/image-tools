@@ -47,6 +47,7 @@ gulp.task('js', ['js/vendor', 'js/index'])
 gulp.task('js/vendor', function () {
     return browserify({ debug: true })
         .plugin('bundle-collapser/plugin')
+        .require('classnames')
         .require('events')
         .require('flux')
         .require('pixi')
@@ -65,6 +66,7 @@ gulp.task('js/vendor', function () {
 gulp.task('js/index', function () {
     return browserify('./js/index.jsx', { debug: true })
         .plugin('bundle-collapser/plugin')
+        .exclude('classnames')
         .exclude('events')
         .exclude('flux')
         .exclude('pixi')
@@ -90,6 +92,7 @@ gulp.task('watch', function () {
         fullPaths: true,
         debug: true
     }))
+        .exclude('classnames')
         .exclude('events')
         .exclude('flux')
         .exclude('pixi')

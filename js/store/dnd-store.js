@@ -1,6 +1,6 @@
 'use strict'
 
-var assign = require('object-assign')
+var _ = require('underscore')
 var EventEmitter = require('events').EventEmitter
 
 var Dispatcher = require('src/singleton/dispatcher.js')
@@ -13,7 +13,7 @@ var _store = {
     is_dragging: false
 }
 
-var DndStore = assign({}, EventEmitter.prototype, {
+var DndStore = _.extend({}, EventEmitter.prototype, {
     isDragging: function () {
         return _store.is_dragging
     },
