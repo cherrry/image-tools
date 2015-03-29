@@ -99,15 +99,25 @@ body {
 }
 
 .anim-accordion-enter, .anim-accordion-leave {
-    transition: all 350ms ease-out;
-    -o-transition: all 350ms ease-out;
-    -moz-transition: all 350ms ease-out;
-    -webkit-transition: all 350ms ease-out;
+    transition: all 250ms ease-out;
+    -o-transition: all 250ms ease-out;
+    -moz-transition: all 250ms ease-out;
+    -webkit-transition: all 250ms ease-out;
+    overflow: hidden;
+}
+
+.anim-accordion-enter {
+    transform-origin: top center;
+    -o-transform-origin: top center;
+    -moz-transform-origin: top center;
+    -webkit-transform-origin: top center;
+}
+
+.anim-accordion-leave {
     transform-origin: top left;
     -o-transform-origin: top left;
     -moz-transform-origin: top left;
     -webkit-transform-origin: top left;
-    overflow: hidden;
 }
 
 .anim-accordion-enter, .anim-accordion-leave.anim-accordion-leave-active {

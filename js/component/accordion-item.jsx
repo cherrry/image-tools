@@ -1,47 +1,17 @@
 'use strict'
 
 var React = require('react/addons')
-var sprintf = require('underscore.string/sprintf')
 var classnames = require('classnames')
 var ReactCSSTransitionGroup = React.addons.CSSTransitionGroup
 
-var findDOMNode = React.findDOMNode
-var document = require('src/var/document.js')
-var uniqueCssId = require('src/util/unique-css-id.js')
-
-var documentHead = document.head
-
+var CatfootedTransitionGroup = require('react-catfooted')
 var TRANSITION_NAME = 'anim-accordion'
 
 var AccordionItemContent = React.createClass({
-    componentWillMount: function () {
-        var self = this
-        self.id = uniqueCssId()
-    },
-    componentDidMount: function () {
-        var self = this
-        var id = self.id
-        var transition = self.props.transitionName
-        var node = findDOMNode(self)
-
-        var style = document.createElement('style')
-        style.appendChild(document.createTextNode(''))
-        document.head.appendChild(style)
-
-        var sheet = style.sheet;
-
-        sheet.insertRule(sprintf('#%(id)s.%(transition)s-enter, #%(id)s.%(transition)s-leave.%(transition)s-leave-active { height: 0; }', { id: id, transition: transition }), 0)
-        sheet.insertRule(sprintf('#%(id)s.%(transition)s-leave, #%(id)s.%(transition)s-enter.%(transition)s-enter-active { height: %(height)dpx; }', { id: id, transition: transition, height: node.scrollHeight }), 1)
-
-        self.style = style;
-    },
-    componentDidUnmount: function () {
-        document.head.removeChild(self.style)
-    },
     render: function () {
         var self = this
         return (
-            <div id={ self.id } className={ classnames(self.props.className) }>
+            <div className={ classnames(self.props.className) }>
                 { self.props.children }
             </div>
         )
@@ -67,7 +37,7 @@ var AccordionItem = React.createClass({
         var content = null
         if (is_active) {
             content = (
-                <AccordionItemContent key="content" className="active content" transitionName={ TRANSITION_NAME }>
+                <AccordionItemContent key="content" className="active content">
                     { self.props.children }
                 </AccordionItemContent>
             )
@@ -79,9 +49,9 @@ var AccordionItem = React.createClass({
                     <i className="dropdown icon" />
                     { self.props.title }
                 </div>
-                <ReactCSSTransitionGroup transitionName={ TRANSITION_NAME }>
+                <CatfootedTransitionGroup transitionName={ TRANSITION_NAME }>
                     { content }
-                </ReactCSSTransitionGroup>
+                </CatfootedTransitionGroup>
             </div>
         )
     }
