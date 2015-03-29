@@ -55,6 +55,7 @@ gulp.task('js/vendor', function () {
         .require('react/addons')
         .require('shortid')
         .require('underscore')
+        .require('underscore.string')
         .bundle()
         .pipe(source('./js/vendor.min.js'))
         .pipe(buffer())
@@ -74,6 +75,7 @@ gulp.task('js/index', function () {
         .exclude('react/addons')
         .exclude('shortid')
         .exclude('underscore')
+        .exclude('underscore.string')
         .bundle()
         .pipe(source('./js/index.min.js'))
         .pipe(buffer())
@@ -100,6 +102,7 @@ gulp.task('watch', function () {
         .exclude('react/addons')
         .exclude('shortid')
         .exclude('underscore')
+        .exclude('underscore.string')
 
     gulp.task('js-watch/index', function () {
         return bundler.bundle()
