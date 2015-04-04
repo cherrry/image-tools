@@ -140,3 +140,22 @@ body {
     user-select: none;
     -webkit-user-select: none;
 }
+
+.anim-dropdown-enter, .anim-dropdown-leave {
+    transition: all 150ms ease-out !important;
+    -o-transition: all 150ms ease-out !important;
+    -moz-transition: all 150ms ease-out !important;
+    -webkit-transition: all 150ms ease-out !important;
+}
+
+.anim-dropdown-enter, .anim-dropdown-leave.anim-dropdown-leave-active {
+    opacity: 0;
+}
+
+.anim-dropdown-leave, .anim-dropdown-enter.anim-dropdown-enter-active {
+    opacity: 1;
+}
+
+.ui.dropdown .menu {
+    display: block;
+}
