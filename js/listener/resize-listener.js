@@ -1,11 +1,11 @@
 'use strict'
 
-var _ = require('underscore')
+var debounce = require('minced/debounce')
 
 var window = require('src/var/window.js')
 var WindowAction = require('src/action/window-action.js')
 
-var onResize = _.debounce(function () {
+var onResize = debounce(function () {
     WindowAction.resize()
 }, 50)
 

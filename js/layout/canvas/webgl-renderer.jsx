@@ -6,10 +6,12 @@ var PIXI = require('pixi')
 var requestAnimationFrame = require('src/var/request-animation-frame.js')
 var ImageStore = require('src/store/image-store.js')
 
+var findDOMNode = React.findDOMNode
+
 var WebglRenderer = React.createClass({
     componentDidMount: function () {
         var self = this
-        var canvas = self.refs.canvas.getDOMNode()
+        var canvas = findDOMNode(self.refs.canvas)
         self._renderer = new PIXI.WebGLRenderer(0, 0, {
             transparent: true,
             view: canvas
@@ -24,7 +26,7 @@ var WebglRenderer = React.createClass({
         var self = this
         var imageUrl = ImageStore.getImageDataUrl()
 
-        var canvas = self.refs.canvas.getDOMNode()
+        var canvas = findDOMNode(self.refs.canvas)
         var canvasHeight = canvas.height
         var canvasWidth = canvas.width
 

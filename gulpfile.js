@@ -47,13 +47,9 @@ gulp.task('js', ['js/vendor', 'js/index'])
 gulp.task('js/vendor', function () {
     return browserify({ debug: true })
         .plugin('bundle-collapser/plugin')
-        .require('events')
-        .require('flux')
         .require('pixi')
         .require('react')
         .require('react/addons')
-        .require('shortid')
-        .require('underscore')
         .bundle()
         .pipe(source('./js/vendor.min.js'))
         .pipe(buffer())
@@ -65,13 +61,9 @@ gulp.task('js/vendor', function () {
 gulp.task('js/index', function () {
     return browserify('./js/index.jsx', { debug: true })
         .plugin('bundle-collapser/plugin')
-        .exclude('events')
-        .exclude('flux')
         .exclude('pixi')
         .exclude('react')
         .exclude('react/addons')
-        .exclude('shortid')
-        .exclude('underscore')
         .bundle()
         .pipe(source('./js/index.min.js'))
         .pipe(buffer())
@@ -90,13 +82,9 @@ gulp.task('watch', function () {
         fullPaths: true,
         debug: true
     }))
-        .exclude('events')
-        .exclude('flux')
         .exclude('pixi')
         .exclude('react')
         .exclude('react/addons')
-        .exclude('shortid')
-        .exclude('underscore')
 
     gulp.task('js-watch/index', function () {
         return bundler.bundle()

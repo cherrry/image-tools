@@ -1,7 +1,5 @@
 'use strict'
 
-var _ = require('underscore')
-
 var DndStore = require('src/store/dnd-store.js')
 var document = require('src/var/document.js')
 var WindowAction = require('src/action/window-action.js')
