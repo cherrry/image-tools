@@ -1,6 +1,6 @@
 'use strict'
 
-var _ = require('underscore')
+var extend = require('minced/extend')
 var EventEmitter = require('events').EventEmitter
 
 var Dispatcher = require('src/singleton/dispatcher.js')
@@ -9,7 +9,7 @@ var uniqueString = require('src/util/unique-string.js')
 
 var WINDOW_EVENT = uniqueString()
 
-var WindowStore = _.extend({}, EventEmitter.prototype, {
+var WindowStore = extend({}, EventEmitter.prototype, {
     addListener: function (callback) {
         var self = this
         self.on(WINDOW_EVENT, callback)

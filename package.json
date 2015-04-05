@@ -20,8 +20,9 @@
         "classnames": "~>1.2.0",
         "flux": "~>2.0.0",
         "react": "~>0.13.0",
+        "react-catfooted": "~>0.0.1",
         "shortid": "~>2.2.0",
-        "underscore": "~>1.8.0"
+        "underscore.string": "~>3.0.0"
     },
     "devDependencies": {
         "browserify": "~>9.0.0",
@@ -60,12 +61,13 @@
     "jest": {
         "scriptPreprocessor": "<rootDir>/preprocessor.js",
         "unmockedModulePathPatterns": [
-            "object-assign",
+            "minced",
             "react",
             "react/addons",
             "src/const",
             "src/util",
-            "src/var"
+            "src/var",
+            "underscore.string"
         ],
         "moduleFileExtensions": [ "js", "jsx" ],
         "testFileExtensions": [ "js", "jsx" ]

@@ -1,7 +1,7 @@
 'use strict'
 
 var React = require('react')
-var _ = require('underscore')
+var debounce = require('minced/debounce')
 
 var window = require('src/var/window.js')
 var WindowStore = require('src/store/window-store.js')
@@ -13,7 +13,7 @@ var findDOMNode = React.findDOMNode
 var Canvas = React.createClass({
     componentDidMount: function () {
         var self = this
-        self._adjustCanvasSize = _.debounce(self._adjustCanvasSize, 200)
+        self._adjustCanvasSize = debounce(self._adjustCanvasSize, 200)
         WindowStore.addListener(self._adjustCanvasSize)
     },
     componentWillUnmount: function () {

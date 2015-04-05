@@ -1,6 +1,6 @@
 'use strict'
 
-var _ = require('underscore')
+var extend = require('minced/extend')
 var EventEmitter = require('events').EventEmitter
 
 var Dispatcher = require('src/singleton/dispatcher.js')
@@ -13,7 +13,7 @@ var _store = {
     data_url: ''
 }
 
-var ImageStore = _.extend({}, EventEmitter.prototype, {
+var ImageStore = extend({}, EventEmitter.prototype, {
     getImageDataUrl: function () {
         return _store.data_url
     },
